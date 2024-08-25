@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
+            $table->string('name')->nullable();
+            $table->boolean('is_private')->deafult(true);
             $table->timestamps();
         });
     }
