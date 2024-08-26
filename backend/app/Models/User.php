@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -16,10 +17,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $table="users";
+    protected $guarded = [
+        'id'
     ];
 
     /**
@@ -28,9 +28,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password'
     ];
+
+    //not sure about this part yet
+    public function chats(): HasMany
+    {
+        return $this->hasMany(Chat::class, 'created_by');
+    }
 
     /**
      * Get the attributes that should be cast.
