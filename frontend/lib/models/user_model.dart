@@ -14,14 +14,14 @@ class UserEntity with _$UserEntity {
   factory UserEntity.fromJson(Map<String, dynamic> json) =>
       _$UserEntityFromJson(json);
 }
+
 @freezed
 class AuthUser with _$AuthUser {
   factory AuthUser({
     required UserEntity user,
     required String token,
-    
   }) = _AuthUser;
 
-    factory AuthUser.fromJson(Map<String, dynamic> json) =>
+  factory AuthUser.fromJson(Map<String, dynamic> json) =>
       _$AuthUserFromJson(json);
 }
