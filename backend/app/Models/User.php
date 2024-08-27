@@ -31,6 +31,8 @@ class User extends Authenticatable
         'password'
     ];
 
+    //const USER_TOKEN="usertoken";
+
     //not sure about this part yet
     public function chats(): HasMany
     {
