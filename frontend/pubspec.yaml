@@ -36,7 +36,7 @@ dependencies:
   path_provider: ^2.0.11
   intl: ^0.17.0
   logger: ^1.1.0
-  pretty_dio_logger: ^1.1.1
+  pretty_dio_logger: ^1.2.0-beta-1
   search_page: ^2.0.0+1
   dash_chat_2: ^0.0.14
   dio: ^4.0.6
@@ -78,8 +78,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/chat.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
