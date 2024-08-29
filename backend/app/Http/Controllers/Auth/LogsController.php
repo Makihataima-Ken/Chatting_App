@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
@@ -10,9 +11,9 @@ use Illuminate\Contracts\auth\StatefulGuard;
 use illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
-class LogController extends Controller
+class LogsController extends Controller
 {
-    /**
+        /**
      * Handle an incoming Login request.
      *
      * @param LoginRequest $request
@@ -75,5 +76,3 @@ class LogController extends Controller
         return $this->success(null,'logged out successfully');
     }
 }
-
-
