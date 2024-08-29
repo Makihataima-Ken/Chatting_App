@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 abstract class Controller
 {
     /**
-     * returns a registeration success as a json response
+     * returns a success as a json response
      * 
      * @param mixed $data
      * @param string $message
@@ -24,7 +24,7 @@ abstract class Controller
     }
 
     /**
-     * returns a registeration error as a json response
+     * returns an error as a json response
      * 
      * @param string $message
      * @param int $statusCode
