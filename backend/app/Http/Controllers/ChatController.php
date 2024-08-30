@@ -33,7 +33,7 @@ class ChatController extends Controller
     /**
      * Store a newly created data of a chat in storage.
      */
-    public function store(StoreChatRequest $request)
+    public function store(StoreChatRequest $request):JsonResponse
     {
         $data=$this->prepareStoredData($request);
 
@@ -55,7 +55,7 @@ class ChatController extends Controller
      * 
      * check 
      */
-    private function getPreviousChat(int $otherUserId)
+    private function getPreviousChat(int $otherUserId):mixed
     {
         $userId=auth()->user()->id;
 
