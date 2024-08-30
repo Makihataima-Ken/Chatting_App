@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LogsController;
 
 Route::prefix('auth')->as('auth.')->group(function () {
+    
     Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
     Route::post('login', [LogsController::class, 'login'])->name('login');
     Route::middleware('auth:sanctum')->group(function () {
