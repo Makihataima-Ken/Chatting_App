@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Notifications\MessageSent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -37,6 +39,20 @@ class User extends Authenticatable
     public function chats(): HasMany
     {
         return $this->hasMany(Chat::class, 'created_by');
+    }
+
+    public function routeNotificationForOneSignal():array
+    {
+        return['tags'=>[
+            'key'=>'user_id',
+            'relation'=>'=',
+            'value'=>(string)($this->id)
+            ]];
+    }
+
+    public function sendNewMessageNotification(array $data)
+    {
+        return $this->notify(new MessageSent($data));
     }
 
     /**
