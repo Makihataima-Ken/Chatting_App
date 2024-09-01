@@ -41,6 +41,14 @@ dependencies:
   dash_chat_2: ^0.0.14
   dio: ^4.0.6
   equatable: ^2.0.5
+  laravel_echo:
+    git:
+      url: https://github.com/kakajansh/echo.git
+      ref: master
+  pusher_client:
+    git:
+      url: https://github.com/DumbDev168/pusher_client.git
+      ref: master
 
   flutter:
     sdk: flutter
