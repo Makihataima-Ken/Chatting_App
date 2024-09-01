@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/blocs/auth/auth_bloc.dart';
 import 'package:frontend/blocs/chat/chat_bloc.dart';
+import 'package:frontend/models/chat_model.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
+import 'package:pusher_client/pusher_client.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -15,6 +19,19 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  void listenChatChannel(ChatEntity chat) {
+    LaravelEcho.instance.private('chat.${chat.id}').listen('.message.sent',
+        (e) {
+      if (e is PusherEvent) {
+        vlog(jsonDecode(e.data!));
+      }
+    });
+  }
+
+  void leavChatChannel() {}
+
+  void _handleNewMessage() {}
+
   @override
   Widget build(BuildContext context) {
     final chatBloc = context.read<ChatBloc>();
