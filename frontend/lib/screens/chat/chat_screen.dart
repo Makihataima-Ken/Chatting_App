@@ -1,9 +1,9 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/blocs/auth/auth_bloc.dart';
 import 'package:frontend/blocs/chat/chat_bloc.dart';
-import 'package:frontend/screens/chat/data.dart';
-import 'package:frontend/utils/logger.dart';
+import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -15,37 +15,45 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  List<ChatMessage> messages = basicSample;
-
   @override
   Widget build(BuildContext context) {
+    final chatBloc = context.read<ChatBloc>();
+    final authBloc = context.read<AuthBloc>();
+
     return StartUpContainer(
-      onInit: (){
-        
+      onInit: () {
+        chatBloc.add(const GetChatMessage());
       },
       child: Scaffold(
         appBar: AppBar(
           title: BlocConsumer<ChatBloc, ChatState>(
-            listener: (_, __) {
-              // TODO: implement listener
-            },
+            listener: (_, __) {},
             builder: (context, state) {
               final chat = state.selectedChat;
-              return const Text("The Other User");
+              return Text(chat == null
+                  ? "N/A"
+                  : getChatName(chat.participants, authBloc.state.user!));
             },
           ),
         ),
-        body: DashChat(
-          currentUser: user,
-          onSend: (ChatMessage chatMessage) {
-            vlog("add a new message to the chat");
+        body: BlocBuilder<ChatBloc, ChatState>(
+          builder: (context, state) {
+            return DashChat(
+              currentUser: authBloc.state.user!.toChatUser,
+              onSend: (ChatMessage chatMessage) {
+                chatBloc.add(SendMessage(
+                  state.selectedChat!.id,
+                  chatMessage,
+                ));
+              },
+              messages: state.uiChatMessages,
+              messageListOptions: MessageListOptions(
+                onLoadEarlier: () async {
+                  chatBloc.add(const LoadMoreChatMessage());
+                },
+              ),
+            );
           },
-          messages: messages,
-          messageListOptions: MessageListOptions(
-            onLoadEarlier: () async {
-              await Future.delayed(const Duration(seconds: 3));
-            },
-          ),
         ),
       ),
     );
