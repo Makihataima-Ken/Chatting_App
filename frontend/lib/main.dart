@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/blocs/blocs.dart';
+import 'package:frontend/blocs/chat/chat_bloc.dart';
 import 'package:frontend/blocs/user/user_bloc.dart';
 import 'package:frontend/cubits/cubits.dart';
 import 'package:frontend/repositories/auth/auth_repository.dart';
 import 'package:frontend/repositories/chat/chat_repository.dart';
+import 'package:frontend/repositories/chat_message/chat_message_repository.dart';
 import 'package:frontend/repositories/user/user_repository.dart';
 import 'package:frontend/screens/chat/chat_screen.dart';
 import 'package:frontend/screens/screens.dart';
@@ -37,6 +39,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<ChatRepository>(
           create: (_) => ChatRepository(),
         ),
+        RepositoryProvider<ChatMessageRepository>(
+          create: (_) => ChatMessageRepository(),
+        ),
         RepositoryProvider<UserRepository>(
           create: (_) => UserRepository(),
         ),
@@ -49,6 +54,11 @@ class MyApp extends StatelessWidget {
               authRepository: context.read<AuthRepository>(),
               authBloc: context.read<AuthBloc>(),
             ),
+          ),
+          BlocProvider(
+            create: (context) => ChatBloc(
+                chatRepository: context.read<ChatRepository>(),
+                chatMessageRepository: context.read<ChatMessageRepository>()),
           ),
           BlocProvider(
             create: (context) =>

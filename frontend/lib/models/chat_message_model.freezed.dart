@@ -193,7 +193,7 @@ class __$$ChatMessageEntityImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ChatMessageEntityImpl implements _ChatMessageEntity {
+class _$ChatMessageEntityImpl extends _ChatMessageEntity {
   _$ChatMessageEntityImpl(
       {required this.id,
       @JsonKey(name: "chat_id") required this.chatId,
@@ -201,7 +201,8 @@ class _$ChatMessageEntityImpl implements _ChatMessageEntity {
       required this.message,
       @JsonKey(name: "created_at") required this.createdAt,
       @JsonKey(name: "updated_at") required this.updatedAt,
-      required this.user});
+      required this.user})
+      : super._();
 
   factory _$ChatMessageEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatMessageEntityImplFromJson(json);
@@ -266,7 +267,7 @@ class _$ChatMessageEntityImpl implements _ChatMessageEntity {
   }
 }
 
-abstract class _ChatMessageEntity implements ChatMessageEntity {
+abstract class _ChatMessageEntity extends ChatMessageEntity {
   factory _ChatMessageEntity(
       {required final int id,
       @JsonKey(name: "chat_id") required final int chatId,
@@ -275,6 +276,7 @@ abstract class _ChatMessageEntity implements ChatMessageEntity {
       @JsonKey(name: "created_at") required final String createdAt,
       @JsonKey(name: "updated_at") required final String updatedAt,
       required final UserEntity user}) = _$ChatMessageEntityImpl;
+  _ChatMessageEntity._() : super._();
 
   factory _ChatMessageEntity.fromJson(Map<String, dynamic> json) =
       _$ChatMessageEntityImpl.fromJson;
