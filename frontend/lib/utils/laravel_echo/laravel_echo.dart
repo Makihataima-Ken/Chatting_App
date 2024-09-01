@@ -32,8 +32,8 @@ class PusherConfig {
   static const key = "86d9be6eec2272ac19c9";
   static const secret = "d43bd32818927e548eef";
   static const cluser = "eu";
-  static const hostEndPoint = "";
-  static const hostAuthEndPoint = "";
+  static const hostEndPoint = "https://1da7-190-2-153-222.ngrok-free.app";
+  static const hostAuthEndPoint = "https://1da7-190-2-153-222.ngrok-free.app";
   static const port = 6001;
 }
 
