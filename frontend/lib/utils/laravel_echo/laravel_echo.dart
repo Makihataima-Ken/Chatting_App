@@ -35,6 +35,7 @@ class PusherConfig {
   static const hostEndPoint = "https://1da7-190-2-153-222.ngrok-free.app";
   static const hostAuthEndPoint = "https://1da7-190-2-153-222.ngrok-free.app";
   static const port = 6001;
+  
 }
 
 PusherClient createPusherClient(String token) {
