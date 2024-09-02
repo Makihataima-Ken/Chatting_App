@@ -32,8 +32,6 @@ class ChatListScreen extends StatelessWidget {
         LaravelEcho.init(token: authBloc.state.token!);
       },
       onDisposed: () {
-        chatBloc.add(const ChatReset());
-        chatBloc.add(const ChatStarted());
         LaravelEcho.instance.disconnect();
       },
       child: Scaffold(

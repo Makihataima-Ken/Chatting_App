@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/blocs/auth/auth_bloc.dart';
 import 'package:frontend/blocs/chat/chat_bloc.dart';
+import 'package:frontend/models/chat_message_model.dart';
 import 'package:frontend/models/chat_model.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
@@ -25,6 +26,7 @@ class _ChatScreenState extends State<ChatScreen> {
       if (e is PusherEvent) {
         if (e.data != null) {
           vlog(jsonDecode(e.data!));
+          _handleNewMessage(jsonDecode(e.data!));
         }
       }
     }).error((err) {
@@ -32,7 +34,7 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  void leavChatChannel(ChatEntity chat) {
+  void leaveChatChannel(ChatEntity chat) {
     try {
       LaravelEcho.instance.leave('chat.${chat.id}');
     } catch (err) {
@@ -40,7 +42,14 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void _handleNewMessage() {}
+  void _handleNewMessage(Map<String, dynamic> data) {
+    final chatBloc = context.read<ChatBloc>();
+    final selectedChat = chatBloc.state.selectedChat!;
+    if (selectedChat.id == data['chat_id']) {
+      final chatMessage = ChatMessageEntity.fromJson(data['message']);
+      chatBloc.add(AddNewMessage(chatMessage));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +59,25 @@ class _ChatScreenState extends State<ChatScreen> {
     return StartUpContainer(
       onInit: () {
         chatBloc.add(const GetChatMessage());
+        if (chatBloc.state.selectedChat != null) {
+          listenChatChannel(chatBloc.state.selectedChat!);
+        }
+      },
+      onDisposed: () {
+        leaveChatChannel(chatBloc.state.selectedChat!);
+        chatBloc.add(const ChatReset());
+        chatBloc.add(const ChatStarted());
       },
       child: Scaffold(
         appBar: AppBar(
           title: BlocConsumer<ChatBloc, ChatState>(
-            listener: (_, __) {},
+            listener: (context, state) {
+              if (state.selectedChat != null) {
+                listenChatChannel(state.selectedChat!);
+              }
+            },
+            listenWhen: (previous, current) =>
+                previous.selectedChat != current.selectedChat,
             builder: (context, state) {
               final chat = state.selectedChat;
               return Text(chat == null
@@ -68,10 +91,13 @@ class _ChatScreenState extends State<ChatScreen> {
             return DashChat(
               currentUser: authBloc.state.user!.toChatUser,
               onSend: (ChatMessage chatMessage) {
-                chatBloc.add(SendMessage(
-                  state.selectedChat!.id,
-                  chatMessage,
-                ));
+                chatBloc.add(
+                  SendMessage(
+                    state.selectedChat!.id,
+                    chatMessage,
+                    socketId: LaravelEcho.socketId,
+                  ),
+                );
               },
               messages: state.uiChatMessages,
               messageListOptions: MessageListOptions(
