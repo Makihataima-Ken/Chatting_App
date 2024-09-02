@@ -23,12 +23,22 @@ class _ChatScreenState extends State<ChatScreen> {
     LaravelEcho.instance.private('chat.${chat.id}').listen('.message.sent',
         (e) {
       if (e is PusherEvent) {
-        vlog(jsonDecode(e.data!));
+        if (e.data != null) {
+          vlog(jsonDecode(e.data!));
+        }
       }
+    }).error((err) {
+      elog(err);
     });
   }
 
-  void leavChatChannel() {}
+  void leavChatChannel(ChatEntity chat) {
+    try {
+      LaravelEcho.instance.leave('chat.${chat.id}');
+    } catch (err) {
+      elog(err);
+    }
+  }
 
   void _handleNewMessage() {}
 
