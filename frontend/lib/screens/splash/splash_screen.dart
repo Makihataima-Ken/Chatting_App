@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/blocs/blocs.dart';
 import 'package:frontend/screens/chat_list/chat_list_screen.dart';
 import 'package:frontend/screens/guest/guest_screen.dart';
-import 'package:frontend/utils/logger.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -29,7 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (!mounted) return;
       final authState = context.read<AuthBloc>().state;
-      elog(authState);
       final redirectScreen = authState.isAuthenticated
           ? ChatListScreen.routeName
           : GuestScreen.routeName;
