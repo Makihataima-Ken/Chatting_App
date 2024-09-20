@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class BlankContent extends StatelessWidget {
   const BlankContent({
-    Key? key,
+    super.key,
     this.content,
     this.isLoading,
     this.icon,
-  }) : super(key: key);
+  });
   final String? content;
   final bool? isLoading;
   final IconData? icon;

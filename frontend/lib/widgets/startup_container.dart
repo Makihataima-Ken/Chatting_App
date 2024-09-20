@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class StartUpContainer extends StatefulWidget {
   const StartUpContainer({
-    Key? key,
+    super.key,
     required this.onInit,
     required this.child,
     this.onDisposed,
     this.delayInitDuration,
-  }) : super(key: key);
+  });
 
   final Function onInit;
   final Widget child;

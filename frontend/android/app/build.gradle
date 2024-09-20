@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.0'
+    }
+}
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
@@ -24,7 +35,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.frontend"
-    compileSdk 33
+    compileSdk 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
