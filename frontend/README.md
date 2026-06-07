@@ -1,16 +1,48 @@
-# frontend
+# Chatting_App Frontend
 
-A new Flutter project.
+This folder contains the Flutter client for the chat application.
 
-## Getting Started
+The Flutter app connects to the Laravel backend and provides the mobile chat interface.
 
-This project is a starting point for a Flutter application.
+## Requirements
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter SDK (compatible with Dart 3.3+)
+- Platform toolchain for your target device(s): Android, iOS, web, Windows, macOS, or Linux
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Setup
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+From the `frontend/` folder:
+
+```bash
+cd frontend
+flutter pub get
+```
+
+If the project uses code generation, run:
+
+```bash
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+## Run the App
+
+Launch the app on a connected device or simulator:
+
+```bash
+flutter run
+```
+
+To run on a specific device:
+
+```bash
+flutter run -d <device-id>
+```
+
+## Notes
+
+- Make sure the app is configured to use the correct backend API URL.
+- If you change model classes or JSON serialization, regenerate generated files using `build_runner`.
+
+## License
+
+This frontend is part of the Chatting_App project and is licensed under the MIT License.
